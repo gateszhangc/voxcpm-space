@@ -6,4 +6,4 @@ resources:
   - ingress-preview.yaml
 images:
   - name: registry.144.91.77.245.sslip.io/voxcpm-space
-    newTag: e579cb6c491d7c48fb6d713b811fecf2e6c70641
+    newTag: 8d625f090d1d55e04724befea5f118d7a3e44d6a
