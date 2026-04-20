@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: voxcpm-space
+  namespace: argocd
+spec:
+  description: VoxCPM static website managed from the application repository
+  sourceRepos:
+    - https://github.com/gateszhangc/voxcpm-space.git
+  destinations:
+    - namespace: voxcpm-space
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: voxcpm-space
+  labels:
+    app.kubernetes.io/name: voxcpm-space
+    app.kubernetes.io/part-of: voxcpm-space

@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VoxCPM2 | 面向音色设计与声音克隆的无分词器多语言 TTS</title>
+    <meta
+      name="description"
+      content="VoxCPM2 是一个无分词器多语言 TTS 项目，支持 30 种语言、音色设计、可控声音克隆、48kHz 输出，并聚合 GitHub、文档、Demo 与模型入口。"
+    />
+    <meta
+      name="keywords"
+      content="VoxCPM, VoxCPM2, 多语言 TTS, 无分词器 TTS, 音色设计, 声音克隆, 48kHz 语音合成"
+    />
+    <meta name="theme-color" content="#07101b" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <link rel="canonical" href="https://voxcpm.space/zh/" />
+    <link rel="alternate" hreflang="en" href="https://voxcpm.space/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://voxcpm.space/zh/" />
+    <link rel="alternate" hreflang="x-default" href="https://voxcpm.space/" />
+    <link rel="icon" type="image/x-icon" href="/assets/brand/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/brand/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="VoxCPM" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:title" content="VoxCPM2 | 无分词器多语言 TTS" />
+    <meta
+      property="og:description"
+      content="查看 VoxCPM2 的核心特性、快速开始、文档、Demo、GitHub 与模型生态入口，覆盖音色设计、多语言合成与可控克隆。"
+    />
+    <meta property="og:url" content="https://voxcpm.space/zh/" />
+    <meta property="og:image" content="https://voxcpm.space/assets/brand/social-card.png" />
+    <meta property="og:image:alt" content="VoxCPM2 项目卡片，展示 logo 与 tokenizer-free multilingual TTS 标题。" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="VoxCPM2 | 无分词器多语言 TTS" />
+    <meta
+      name="twitter:description"
+      content="30 种语言、音色设计、可控克隆、48kHz 输出，以及 VoxCPM2 的开源资源入口。"
+    />
+    <meta name="twitter:image" content="https://voxcpm.space/assets/brand/social-card.png" />
+    <meta name="twitter:image:alt" content="VoxCPM2 项目卡片，展示 logo 与 tokenizer-free multilingual TTS 标题。" />
+    <link rel="preload" href="/assets/fonts/Tektur-Medium.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/assets/fonts/InstrumentSans-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "VoxCPM",
+        "url": "https://voxcpm.space/zh/",
+        "inLanguage": "zh-CN",
+        "description": "VoxCPM2 无分词器多语言语音合成项目站点。",
+        "publisher": {
+          "@type": "Organization",
+          "name": "OpenBMB"
+        },
+        "sameAs": [
+          "https://github.com/OpenBMB/VoxCPM",
+          "https://voxcpm.readthedocs.io/zh-cn/latest/"
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "VoxCPM",
+        "codeRepository": "https://github.com/OpenBMB/VoxCPM",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "url": "https://voxcpm.space/zh/",
+        "description": "基于连续语音表征的无分词器多语言语音合成，支持音色设计、可控克隆与 48kHz 输出。",
+        "programmingLanguage": "Python",
+        "runtimePlatform": "Python 3.10+",
+        "author": {
+          "@type": "Organization",
+          "name": "OpenBMB"
+        },
+        "keywords": "VoxCPM, VoxCPM2, 多语言 TTS, 音色设计, 可控声音克隆"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "VoxCPM",
+            "item": "https://voxcpm.space/zh/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "VoxCPM2"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "VoxCPM2 是什么？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "VoxCPM2 是一个无分词器多语言文本转语音模型，直接生成连续语音表征，以获得更自然、更有表现力的合成结果。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "VoxCPM2 能做什么？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "它支持多语言 TTS、音色设计、可控声音克隆、极致克隆以及 48kHz 高质量音频输出。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "支持哪些语言？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "根据官方仓库说明，当前版本支持 30 种全球语言和 9 种中文方言。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "去哪里看官方项目资源？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "可以通过 OpenBMB 官方 GitHub 仓库、Read the Docs、Hugging Face、ModelScope 和官方 Demo 页面查看。"
+            }
+          }
+        ]
+      }
+    </script>
+    <script defer src="/script.js"></script>
+  </head>
+  <body data-page="zh">
+    <a class="skip-link" href="#quickstart">跳到快速开始</a>
+    <div class="site-frame">
+      <header class="topbar" data-topbar>
+        <a class="brand" href="/zh/" aria-label="VoxCPM 中文首页">
+          <img src="/assets/brand/logo-wordmark.png" alt="VoxCPM 字标" width="1800" height="560" />
+        </a>
+        <div class="topbar-group">
+          <nav class="nav" aria-label="主导航">
+            <a href="#features">核心特性</a>
+            <a href="#use-cases">应用方向</a>
+            <a href="#quickstart">快速开始</a>
+            <a href="#ecosystem">生态入口</a>
+            <a href="#faq">FAQ</a>
+          </nav>
+          <a class="lang-pill" href="/" hreflang="en" lang="en">EN</a>
+        </div>
+      </header>
+
+      <main id="top">
+        <section class="hero section">
+          <div class="hero-copy panel" data-reveal>
+            <p class="eyebrow">开源多语言语音生成</p>
+            <h1>面向音色设计与高保真克隆的无分词器 TTS。</h1>
+            <p class="hero-dek">
+              VoxCPM2 是一个 20 亿参数的语音模型，训练于超过 200 万小时的多语种音频数据，支持
+              30 种语言与 9 种中文方言。它可以从自然语言描述创建新音色，也可以基于参考音频进行可控克隆，
+              并原生输出 48kHz 高质量音频。
+            </p>
+            <div class="hero-actions">
+              <a
+                class="button button-primary"
+                data-cta="demo"
+                href="https://huggingface.co/spaces/OpenBMB/VoxCPM-Demo"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                在线体验
+              </a>
+              <a
+                class="button button-secondary"
+                data-cta="github"
+                href="https://github.com/OpenBMB/VoxCPM"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                查看 GitHub
+              </a>
+              <a
+                class="button button-secondary"
+                data-cta="docs"
+                href="https://voxcpm.readthedocs.io/zh-cn/latest/"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                阅读文档
+              </a>
+            </div>
+            <div class="hero-badges" aria-label="项目事实">
+              <span>20 亿参数</span>
+              <span>200 万+ 小时训练</span>
+              <span>30 种语言</span>
+              <span>9 种中文方言</span>
+              <span>Apache-2.0</span>
+            </div>
+            <dl class="hero-stats">
+              <div>
+                <dt>音色设计</dt>
+                <dd>只靠自然语言提示，就能凭空创建全新声音。</dd>
+              </div>
+              <div>
+                <dt>可控克隆</dt>
+                <dd>在保留原始 timbre 的同时调节情绪、语速与风格。</dd>
+              </div>
+              <div>
+                <dt>极致克隆</dt>
+                <dd>结合提示音频与转录文本，获得更高相似度的延续式克隆。</dd>
+              </div>
+              <div>
+                <dt>流式推理</dt>
+                <dd>可结合 Nano-vLLM 与 vLLM-Omni 实现更低 RTF 的实时服务。</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="hero-visual panel" data-reveal>
+            <div class="signal-stage">
+              <img class="signal-logo" src="/assets/brand/logo-mark.png" alt="" width="1024" height="1024" />
+              <div class="signal-caption">
+                <p>VoxCPM2 / Continuous speech representations</p>
+                <span>设计声音，克隆声音，实时生成声音。</span>
+              </div>
+            </div>
+            <div class="proof-panel" aria-label="技术要点">
+              <div class="proof-row">
+                <span>架构</span>
+                <strong>端到端扩散自回归生成，绕开离散音频分词器。</strong>
+              </div>
+              <div class="proof-row">
+                <span>底座</span>
+                <strong>基于 MiniCPM-4，并提供开源代码与模型权重。</strong>
+              </div>
+              <div class="proof-row">
+                <span>输出</span>
+                <strong>借助 AudioVAE V2 非对称编解码，原生输出 48kHz 音频。</strong>
+              </div>
+              <div class="proof-row">
+                <span>服务</span>
+                <strong>可接入 OpenAI 兼容推理路径与社区/官方流式部署栈。</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section proof-strip" aria-label="VoxCPM 证明条">
+          <article class="proof-card" data-reveal>
+            <span>版本</span>
+            <strong>VoxCPM2</strong>
+          </article>
+          <article class="proof-card" data-reveal>
+            <span>覆盖</span>
+            <strong>30 种语言</strong>
+          </article>
+          <article class="proof-card" data-reveal>
+            <span>方言</span>
+            <strong>9 种中文方言</strong>
+          </article>
+          <article class="proof-card" data-reveal>
+            <span>音质</span>
+            <strong>48kHz 输出</strong>
+          </article>
+          <article class="proof-card" data-reveal>
+            <span>协议</span>
+            <strong>Apache-2.0</strong>
+          </article>
+        </section>
+
+        <section class="section" id="features">
+          <div class="section-heading" data-reveal>
+            <p class="eyebrow">核心特性</p>
+            <h2>VoxCPM 最值得关注的能力，被压缩成六个入口。</h2>
+            <p>
+              官方仓库最核心的叙述集中在六件事：多语言合成、音色设计、可控克隆、极致克隆、
+              语境感知韵律以及实时流式服务。
+            </p>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-card panel" data-reveal>
+              <span class="feature-index">01</span>
+              <h3>30 语种合成</h3>
+              <p>直接输入原始文本即可在 30 种语言中进行合成，无需额外语言标签。</p>
+            </article>
+            <article class="feature-card panel" data-reveal>
+              <span class="feature-index">02</span>
+              <h3>音色设计</h3>
+              <p>只通过自然语言描述，就能从零创建全新音色，不依赖参考音频。</p>
+            </article>
+            <article class="feature-card panel" data-reveal>
+              <span class="feature-index">03</span>
+              <h3>可控声音克隆</h3>
+              <p>基于短参考音频克隆 timbre，并叠加风格控制指令改变表现力。</p>
+            </article>
+            <article class="feature-card panel" data-reveal>
+              <span class="feature-index">04</span>
+              <h3>极致克隆</h3>
+              <p>结合提示音频与精确转录，让模型以续写方式保留更多细节特征。</p>
+            </article>
+            <article class="feature-card panel" data-reveal>
+              <span class="feature-index">05</span>
+              <h3>语境感知韵律</h3>
+              <p>模型会根据文本内容自动推断合适的节奏、停顿与表达方式。</p>
+            </article>
+            <article class="feature-card panel" data-reveal>
+              <span class="feature-index">06</span>
+              <h3>实时流式推理</h3>
+              <p>通过 Nano-vLLM 或 vLLM-Omni 可获得更低 RTF 和 OpenAI 兼容服务路径。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="use-cases">
+          <div class="section-heading" data-reveal>
+            <p class="eyebrow">应用方向</p>
+            <h2>团队通常会这样使用 VoxCPM。</h2>
+            <p>
+              当你需要从文本或短参考音频快速得到可控、高保真、可部署的语音输出时，VoxCPM
+              的优势会非常明显。
+            </p>
+          </div>
+          <div class="scenario-grid">
+            <article class="scenario-card panel" data-reveal>
+              <span class="scenario-index">A</span>
+              <h3>构建多语言产品声音</h3>
+              <p>从纯文本出发，覆盖全球语种，用一套开源语音栈服务产品播报、助手或内容生成。</p>
+              <div class="scenario-tags">
+                <span>30 语种</span>
+                <span>语境感知</span>
+                <span>48kHz</span>
+              </div>
+            </article>
+            <article class="scenario-card panel" data-reveal>
+              <span class="scenario-index">B</span>
+              <h3>快速探索品牌音色</h3>
+              <p>先用自然语言描述尝试不同人格与音色，再决定是否继续做更重的数据采集与精修。</p>
+              <div class="scenario-tags">
+                <span>自然语言控制</span>
+                <span>无需参考音频</span>
+                <span>创意试验</span>
+              </div>
+            </article>
+            <article class="scenario-card panel" data-reveal>
+              <span class="scenario-index">C</span>
+              <h3>做更可控的声音克隆</h3>
+              <p>将短参考音频、风格指令与提示音频续写结合起来，同时追求相似度与表达控制。</p>
+              <div class="scenario-tags">
+                <span>参考音频</span>
+                <span>风格提示</span>
+                <span>流式部署</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="quickstart">
+          <div class="quickstart-shell panel" data-reveal>
+            <div>
+              <p class="eyebrow">快速开始</p>
+              <h2>先装起来，再跑出第一段语音。</h2>
+              <p class="code-note">
+                官方项目要求 Python 3.10+、PyTorch 2.5+、CUDA 12.0+。如果只是想最快验证效果，
+                直接从 `openbmb/VoxCPM2` 开始即可。
+              </p>
+              <ul class="requirements-list">
+                <li>先执行 `pip install voxcpm` 安装基础包。</li>
+                <li>`openbmb/VoxCPM2` 是当前推荐的主版本。</li>
+                <li>更完整的安装、CLI 与部署方式请查看 Read the Docs。</li>
+                <li>国内网络可优先使用 ModelScope 镜像下载模型。</li>
+              </ul>
+            </div>
+            <div class="code-shell">
+              <div class="code-toolbar">
+                <span class="code-label">Python API</span>
+                <button
+                  class="copy-button"
+                  type="button"
+                  data-copy-code="quickstart-zh"
+                  data-copy-label="复制代码"
+                  data-copy-success="已复制"
+                  data-copy-fallback="复制失败"
+                >
+                  复制代码
+                </button>
+              </div>
+              <pre><code id="quickstart-zh">from voxcpm import VoxCPM
+import soundfile as sf
+
+model = VoxCPM.from_pretrained(
+    "openbmb/VoxCPM2",
+    load_denoiser=False,
+)
+
+wav = model.generate(
+    text="VoxCPM2 已准备好进行高质量多语言语音合成。",
+    cfg_value=2.0,
+    inference_timesteps=10,
+)
+
+sf.write("demo.wav", wav, model.tts_model.sample_rate)</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="ecosystem">
+          <div class="section-heading" data-reveal>
+            <p class="eyebrow">生态入口</p>
+            <h2>用最短路径抵达代码、文档、模型、Demo 和样例。</h2>
+            <p>
+              这个站点本身保持轻量，真正有用的资源都直接跳向 OpenBMB 官方或官方关联页面。
+            </p>
+          </div>
+          <div class="ecosystem-grid">
+            <a
+              class="ecosystem-card panel"
+              data-reveal
+              href="https://github.com/OpenBMB/VoxCPM"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <p class="eyebrow">代码</p>
+              <h3>OpenBMB GitHub</h3>
+              <p>查看仓库、release、issue，以及最权威的 README 与版本说明。</p>
+              <span class="link-row">打开仓库 →</span>
+            </a>
+            <a
+              class="ecosystem-card panel"
+              data-reveal
+              href="https://voxcpm.readthedocs.io/zh-cn/latest/"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <p class="eyebrow">文档</p>
+              <h3>Read the Docs</h3>
+              <p>集中查看安装、快速开始、API、CLI 与部署说明。</p>
+              <span class="link-row">阅读文档 →</span>
+            </a>
+            <a
+              class="ecosystem-card panel"
+              data-reveal
+              href="https://huggingface.co/spaces/OpenBMB/VoxCPM-Demo"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <p class="eyebrow">体验</p>
+              <h3>在线 Demo</h3>
+              <p>在本地部署之前，先试音色设计、文本转语音和克隆效果。</p>
+              <span class="link-row">进入 Demo →</span>
+            </a>
+            <a
+              class="ecosystem-card panel"
+              data-reveal
+              href="https://huggingface.co/openbmb/VoxCPM2"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <p class="eyebrow">权重</p>
+              <h3>Hugging Face</h3>
+              <p>查看当前推荐模型以及历史版本的 checkpoint 入口。</p>
+              <span class="link-row">浏览模型 →</span>
+            </a>
+            <a
+              class="ecosystem-card panel"
+              data-reveal
+              href="https://modelscope.cn/models/OpenBMB/VoxCPM2"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <p class="eyebrow">镜像</p>
+              <h3>ModelScope</h3>
+              <p>适合国内访问场景的模型镜像与下载入口。</p>
+              <span class="link-row">打开镜像 →</span>
+            </a>
+            <a
+              class="ecosystem-card panel"
+              data-reveal
+              href="https://openbmb.github.io/voxcpm2-demopage/"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <p class="eyebrow">样例</p>
+              <h3>音频样本页</h3>
+              <p>直接试听多语言、克隆与对比样例，快速判断声音质量。</p>
+              <span class="link-row">试听样例 →</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="section" id="faq">
+          <div class="section-heading" data-reveal>
+            <p class="eyebrow">FAQ</p>
+            <h2>第一次接触 VoxCPM 时最常见的四个问题。</h2>
+          </div>
+          <div class="faq-list">
+            <details data-reveal>
+              <summary>VoxCPM 里的 “tokenizer-free” 到底是什么意思？</summary>
+              <p>
+                它指的是模型直接处理连续语音表征，而不是依赖离散音频 tokenizer。这是官方项目强调的
+                架构核心差异。
+              </p>
+            </details>
+            <details data-reveal>
+              <summary>没有参考音频，也能生成一个全新声音吗？</summary>
+              <p>
+                可以。VoxCPM2 的音色设计能力允许你只用自然语言描述，就生成新的声音人格与 timbre。
+              </p>
+            </details>
+            <details data-reveal>
+              <summary>怎样才能获得更高的克隆相似度？</summary>
+              <p>
+                官方示例建议同时使用参考音频、提示音频以及对应转录文本，让模型以续写方式保留更多细节。
+              </p>
+            </details>
+            <details data-reveal>
+              <summary>如果我只是想先听效果，应该从哪里开始？</summary>
+              <p>
+                先看在线 Demo 和音频样本页，再进入 GitHub 仓库和文档查看安装与部署方式，会更高效。
+              </p>
+            </details>
+          </div>
+        </section>
+      </main>
+
+      <footer class="section">
+        <div class="footer-shell panel" data-reveal>
+          <div>
+            <img class="footer-brand" src="/assets/brand/logo-wordmark.png" alt="VoxCPM 字标" width="1800" height="560" />
+            <p class="footer-note">
+              VoxCPM.space 是一个轻量项目落地页，负责把代码、文档、模型、Demo 与社区入口聚合到一起。
+            </p>
+            <p class="footer-note">© <span id="current-year">2026</span> VoxCPM.space</p>
+          </div>
+          <div class="footer-links">
+            <a href="https://github.com/OpenBMB/VoxCPM" target="_blank" rel="noreferrer noopener">GitHub</a>
+            <a href="https://voxcpm.readthedocs.io/zh-cn/latest/" target="_blank" rel="noreferrer noopener">文档</a>
+            <a href="https://huggingface.co/spaces/OpenBMB/VoxCPM-Demo" target="_blank" rel="noreferrer noopener">Demo</a>
+            <a href="https://discord.gg/KZUx7tVNwz" target="_blank" rel="noreferrer noopener">Discord</a>
+            <a href="/" hreflang="en" lang="en">EN</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

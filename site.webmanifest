@@ -1,15 +1,20 @@
 {
-  "name": "Artemis II Wallpaper",
-  "short_name": "Artemis II",
-  "description": "Independent editorial collection of Artemis II wallpapers using publicly released NASA imagery with source credit.",
+  "name": "VoxCPM",
+  "short_name": "VoxCPM",
+  "description": "Tokenizer-free multilingual TTS with voice design, controllable cloning, and 48kHz output.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#050912",
-  "theme_color": "#050912",
+  "background_color": "#07101b",
+  "theme_color": "#07101b",
   "icons": [
     {
+      "src": "/assets/brand/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
       "src": "/assets/brand/favicon.png",
-      "sizes": "256x256",
+      "sizes": "512x512",
       "type": "image/png"
     },
     {

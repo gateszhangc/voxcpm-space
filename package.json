@@ -1,9 +1,10 @@
 {
-  "name": "artemis-2-wallpaper",
+  "name": "voxcpm-site",
   "version": "1.0.0",
   "private": true,
-  "description": "Static Artemis II wallpaper site built from publicly released NASA imagery.",
+  "description": "Static bilingual VoxCPM project site.",
   "scripts": {
+    "generate:brand": "python3 scripts/generate_brand_assets.py",
     "start": "node server.js",
     "test": "playwright test",
     "test:browser": "playwright test"

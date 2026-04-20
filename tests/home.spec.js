@@ -1,36 +1,61 @@
 const { test, expect } = require("@playwright/test");
 
-test.describe("Artemis II wallpaper site", () => {
-  test("desktop homepage renders key content and filters wallpapers", async ({ page }) => {
+test.describe("VoxCPM static site", () => {
+  test("english homepage renders key content, metadata, and screenshots", async ({ page }, testInfo) => {
     await page.goto("/");
 
-    await expect(page).toHaveTitle(/Artemis II Wallpaper/i);
-    await expect(page.locator("h1")).toHaveText("Artemis II Wallpaper");
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /publicly released NASA mission imagery/i);
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://artemis-2-wallpaper.lol/");
+    const demoLink = page.locator('[data-cta="demo"]');
+    const githubLink = page.locator('[data-cta="github"]');
+    const docsLink = page.locator('[data-cta="docs"]');
+    const topbarZhLink = page.locator("header.topbar").getByRole("link", { name: "中文" });
 
-    const wallpaperCards = page.locator(".wallpaper-card");
-    await expect(wallpaperCards).toHaveCount(10);
-    await expect(page.getByText("Not an official NASA website.")).toBeVisible();
+    await expect(page).toHaveTitle(/VoxCPM2/i);
+    await expect(page.locator("body")).toHaveAttribute("data-page", "en");
+    await expect(page.locator("h1")).toHaveText(/Tokenizer-free TTS/i);
+    await expect(demoLink).toBeVisible();
+    await expect(githubLink).toBeVisible();
+    await expect(docsLink).toBeVisible();
 
-    await page.getByRole("button", { name: "Posters" }).click();
-    await expect(page.locator(".wallpaper-card:not([hidden])")).toHaveCount(2);
-    await expect(page.locator("[data-results-count]")).toHaveText("Showing 2 wallpapers");
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /tokenizer-free multilingual TTS/i);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://voxcpm.space/");
+    await expect(page.locator('link[rel="alternate"][hreflang="zh-CN"]')).toHaveAttribute("href", "https://voxcpm.space/zh/");
 
-    await page.getByRole("button", { name: "All" }).click();
-    await expect(page.locator(".wallpaper-card:not([hidden])")).toHaveCount(10);
+    await expect(demoLink).toHaveAttribute("href", "https://huggingface.co/spaces/OpenBMB/VoxCPM-Demo");
+    await expect(githubLink).toHaveAttribute("href", "https://github.com/OpenBMB/VoxCPM");
+    await expect(docsLink).toHaveAttribute("href", "https://voxcpm.readthedocs.io/en/latest/");
 
-    for (const image of await page.locator("img").all()) {
-      await image.scrollIntoViewIfNeeded();
-    }
+    await expect(topbarZhLink).toHaveAttribute("href", "/zh/");
+    await expect(page.locator('link[rel="icon"][type="image/x-icon"]')).toHaveAttribute("href", "/assets/brand/favicon.ico");
 
-    const imagesLoaded = await page.evaluate(() =>
+    const logosLoaded = await page.evaluate(() =>
       Array.from(document.images).every((image) => image.complete && image.naturalWidth > 0)
     );
-    expect(imagesLoaded).toBe(true);
+    expect(logosLoaded).toBe(true);
+
+    await page.screenshot({ path: testInfo.outputPath("home-en.png"), fullPage: true });
   });
 
-  test("mobile layout stays within viewport and keeps gallery accessible", async ({ browser }) => {
+  test("chinese homepage renders, links back to english, and screenshots", async ({ page }, testInfo) => {
+    await page.goto("/zh/");
+
+    const demoLink = page.locator('[data-cta="demo"]');
+    const githubLink = page.locator('[data-cta="github"]');
+    const docsLink = page.locator('[data-cta="docs"]');
+    const topbarEnLink = page.locator("header.topbar").getByRole("link", { name: "EN" });
+
+    await expect(page).toHaveTitle(/VoxCPM2/);
+    await expect(page.locator("body")).toHaveAttribute("data-page", "zh");
+    await expect(page.locator("h1")).toHaveText(/无分词器 TTS/);
+    await expect(demoLink).toBeVisible();
+    await expect(githubLink).toBeVisible();
+    await expect(docsLink).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://voxcpm.space/zh/");
+    await expect(topbarEnLink).toHaveAttribute("href", "/");
+
+    await page.screenshot({ path: testInfo.outputPath("home-zh.png"), fullPage: true });
+  });
+
+  test("mobile layout has no horizontal overflow and language switch works", async ({ browser }) => {
     const context = await browser.newContext({
       viewport: { width: 390, height: 844 },
       isMobile: true
@@ -38,18 +63,14 @@ test.describe("Artemis II wallpaper site", () => {
     const page = await context.newPage();
 
     await page.goto("/");
+    await expect(page.locator('[data-cta="demo"]')).toBeVisible();
+    await page.locator("header.topbar").getByRole("link", { name: "中文" }).click();
+    await expect(page).toHaveURL(/\/zh\/$/);
+    await expect(page.locator("h1")).toHaveText(/无分词器 TTS/);
 
-    await expect(page.locator("h1")).toBeVisible();
-    await expect(page.getByRole("link", { name: "Explore the Collection" })).toBeVisible();
-    await page.getByRole("link", { name: "Explore the Collection" }).click();
-    await expect(page.locator("#gallery")).toBeInViewport();
-
-    const overflow = await page.evaluate(() => {
-      return document.documentElement.scrollWidth - window.innerWidth;
-    });
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow).toBeLessThanOrEqual(1);
 
-    await expect(page.locator(".wallpaper-card")).toHaveCount(10);
     await context.close();
   });
 });

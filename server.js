@@ -13,18 +13,34 @@ const contentTypes = {
   ".js": "text/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
   ".manifest": "application/manifest+json; charset=utf-8",
+  ".md": "text/markdown; charset=utf-8",
   ".png": "image/png",
   ".svg": "image/svg+xml",
-  ".txt": "text/plain; charset=utf-8",
   ".ttf": "font/ttf",
+  ".txt": "text/plain; charset=utf-8",
   ".webmanifest": "application/manifest+json; charset=utf-8",
-  ".webp": "image/webp",
   ".xml": "application/xml; charset=utf-8"
 };
 
 const send = (response, statusCode, headers, body) => {
   response.writeHead(statusCode, headers);
   response.end(body);
+};
+
+const resolveRequestPath = (pathname) => {
+  if (pathname === "/") {
+    return "/index.html";
+  }
+
+  if (pathname.endsWith("/")) {
+    return `${pathname}index.html`;
+  }
+
+  if (!path.extname(pathname)) {
+    return `${pathname}/index.html`;
+  }
+
+  return pathname;
 };
 
 const serveFile = (requestPath, response) => {
@@ -65,18 +81,14 @@ const serveFile = (requestPath, response) => {
 
 const server = http.createServer((request, response) => {
   const url = new URL(request.url || "/", `http://${request.headers.host || "localhost"}`);
-  let pathname = decodeURIComponent(url.pathname);
+  const pathname = decodeURIComponent(url.pathname);
 
   if (pathname === "/healthz") {
     send(response, 200, { "Content-Type": "application/json; charset=utf-8" }, JSON.stringify({ ok: true }));
     return;
   }
 
-  if (pathname === "/") {
-    pathname = "/index.html";
-  }
-
-  serveFile(pathname, response);
+  serveFile(resolveRequestPath(pathname), response);
 });
 
 server.listen(port, host, () => {

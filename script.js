@@ -1,31 +1,7 @@
 const topbar = document.querySelector("[data-topbar]");
-const filterButtons = Array.from(document.querySelectorAll(".filter-button"));
-const wallpaperCards = Array.from(document.querySelectorAll(".wallpaper-card"));
-const resultsCount = document.querySelector("[data-results-count]");
 const yearNode = document.querySelector("#current-year");
-
-const updateResults = (filter) => {
-  let visible = 0;
-
-  wallpaperCards.forEach((card) => {
-    const tags = (card.dataset.tags || "").split(" ");
-    const matches = filter === "all" || tags.includes(filter);
-    card.hidden = !matches;
-    if (matches) visible += 1;
-  });
-
-  if (resultsCount) {
-    resultsCount.textContent = `Showing ${visible} wallpaper${visible === 1 ? "" : "s"}`;
-  }
-};
-
-filterButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    filterButtons.forEach((entry) => entry.classList.remove("is-active"));
-    button.classList.add("is-active");
-    updateResults(button.dataset.filter || "all");
-  });
-});
+const revealNodes = document.querySelectorAll("[data-reveal]");
+const copyButtons = document.querySelectorAll("[data-copy-code]");
 
 if (yearNode) {
   yearNode.textContent = new Date().getFullYear();
@@ -36,6 +12,57 @@ const handleScroll = () => {
   topbar.classList.toggle("is-scrolled", window.scrollY > 12);
 };
 
+const revealObserver =
+  "IntersectionObserver" in window
+    ? new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.16 }
+      )
+    : null;
+
+revealNodes.forEach((node) => {
+  if (!revealObserver) {
+    node.classList.add("is-visible");
+    return;
+  }
+
+  revealObserver.observe(node);
+});
+
+window.setTimeout(() => {
+  revealNodes.forEach((node) => node.classList.add("is-visible"));
+}, 500);
+
+copyButtons.forEach((button) => {
+  button.addEventListener("click", async () => {
+    const targetId = button.getAttribute("data-copy-code");
+    if (!targetId) return;
+
+    const codeNode = document.getElementById(targetId);
+    if (!codeNode) return;
+
+    try {
+      await navigator.clipboard.writeText(codeNode.textContent || "");
+      const originalText = button.textContent;
+      button.textContent = button.getAttribute("data-copy-success") || "Copied";
+      window.setTimeout(() => {
+        button.textContent = originalText;
+      }, 1400);
+    } catch (error) {
+      button.textContent = button.getAttribute("data-copy-fallback") || "Copy failed";
+      window.setTimeout(() => {
+        button.textContent = button.getAttribute("data-copy-label") || "Copy";
+      }, 1400);
+    }
+  });
+});
+
 window.addEventListener("scroll", handleScroll, { passive: true });
 handleScroll();
-updateResults("all");

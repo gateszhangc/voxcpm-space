@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: voxcpm-space-preview
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - secretName: voxcpm-space-preview-tls
+      hosts:
+        - voxcpm-space.144.91.77.245.sslip.io
+  rules:
+    - host: voxcpm-space.144.91.77.245.sslip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: voxcpm-space
+                port:
+                  number: 80

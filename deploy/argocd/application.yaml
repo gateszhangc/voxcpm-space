@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: voxcpm-space
+  namespace: argocd
+spec:
+  project: voxcpm-space
+  source:
+    repoURL: https://github.com/gateszhangc/voxcpm-space.git
+    targetRevision: main
+    path: deploy/k8s/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: voxcpm-space
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
