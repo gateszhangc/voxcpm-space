@@ -20,9 +20,9 @@ test.describe("VoxCPM static site", () => {
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://voxcpm.space/");
     await expect(page.locator('link[rel="alternate"][hreflang="zh-CN"]')).toHaveAttribute("href", "https://voxcpm.space/zh/");
 
-    await expect(demoLink).toHaveAttribute("href", "https://huggingface.co/spaces/OpenBMB/VoxCPM-Demo");
-    await expect(githubLink).toHaveAttribute("href", "https://github.com/OpenBMB/VoxCPM");
-    await expect(docsLink).toHaveAttribute("href", "https://voxcpm.readthedocs.io/en/latest/");
+    await expect(demoLink).toHaveAttribute("href", "https://mirofish.my/");
+    await expect(githubLink).toHaveAttribute("href", "https://mirofish.my/");
+    await expect(docsLink).toHaveAttribute("href", "https://mirofish.my/");
 
     await expect(topbarZhLink).toHaveAttribute("href", "/zh/");
     await expect(page.locator('link[rel="icon"][type="image/x-icon"]')).toHaveAttribute("href", "/assets/brand/favicon.ico");
@@ -49,6 +49,9 @@ test.describe("VoxCPM static site", () => {
     await expect(demoLink).toBeVisible();
     await expect(githubLink).toBeVisible();
     await expect(docsLink).toBeVisible();
+    await expect(demoLink).toHaveAttribute("href", "https://mirofish.my/");
+    await expect(githubLink).toHaveAttribute("href", "https://mirofish.my/");
+    await expect(docsLink).toHaveAttribute("href", "https://mirofish.my/");
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://voxcpm.space/zh/");
     await expect(topbarEnLink).toHaveAttribute("href", "/");
 
